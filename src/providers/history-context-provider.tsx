@@ -15,7 +15,7 @@ export const HistoryProvider = ({
   const [history, setHistory] = useState<string[]>(() => {
     if (typeof window !== "undefined") {
       const savedHistory = localStorage.getItem(
-        LOCAL_STORAGE.navigationHistory,
+        LOCAL_STORAGE.navigationHistory
       );
       return savedHistory ? JSON.parse(savedHistory) : [];
     }
@@ -23,11 +23,11 @@ export const HistoryProvider = ({
   });
 
   useEffect(() => {
-    if (pathname === "/" || pathname === "/feed") {
+    if (pathname === "/" || pathname === "/dashboard") {
       setHistory([pathname]);
       localStorage.setItem(
         LOCAL_STORAGE.navigationHistory,
-        JSON.stringify([pathname]),
+        JSON.stringify([pathname])
       );
       return;
     }
@@ -37,7 +37,7 @@ export const HistoryProvider = ({
         const updatedHistory = [...prevHistory, pathname];
         localStorage.setItem(
           LOCAL_STORAGE.navigationHistory,
-          JSON.stringify(updatedHistory),
+          JSON.stringify(updatedHistory)
         );
         return updatedHistory;
       }
@@ -54,7 +54,7 @@ export const HistoryProvider = ({
       setHistory(updatedHistory);
       localStorage.setItem(
         LOCAL_STORAGE.navigationHistory,
-        JSON.stringify(updatedHistory),
+        JSON.stringify(updatedHistory)
       );
       navigate(previousPage || "/");
     } else {

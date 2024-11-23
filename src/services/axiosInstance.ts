@@ -2,7 +2,7 @@ import axios from "axios";
 import { LOCAL_STORAGE } from "../utils/constants";
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000",
+  baseURL: process.env.REACT_APP_API_BASE_URL || "http://localhost:5000",
   withCredentials: true,
 });
 
@@ -20,7 +20,7 @@ axiosInstance.interceptors.response.use(
       window.location.href = "/";
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export default axiosInstance;

@@ -1,44 +1,60 @@
 import axiosInstance from "./axiosInstance";
-import { IContest, IContestCardProps } from "../types/types";
-import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
+import { IContest } from "../types/types";
 
-export const getContests = async (filter: string, city: string) => {
-  const { data } = await axiosInstance.get("/api/contests/feed", {
-    params: { filter, city },
-  });
+// Fetch all contests -specific)
+export const getAllContests = async (
+  searchTerm: string = "",
+  filters: Record<string, string> = {}
+): Promise<IContest[]> => {
+  const queryParams = new URLSearchParams({
+    search: searchTerm,
+    ...filters,
+  }).toString();
+
+  const { data } = await axiosInstance.get(`/api/contests?${queryParams}`);
+  return data;
+};
+// Create a new contest
+export const createNewContest = async (
+  contestData: Partial<IContest>
+): Promise<IContest> => {
+  const { data } = await axiosInstance.post("/api/contests", contestData);
   return data;
 };
 
-const getContestByAlias = async (alias: string): Promise<IContest> => {
+// Update a contest
+export const updateContest = async (
+  id: string,
+  contestData: Partial<IContest>
+): Promise<IContest> => {
+  const { data } = await axiosInstance.put(`/api/contests/${id}`, contestData);
+  return data;
+};
+
+export const getContestByAlias = async (alias: string): Promise<IContest> => {
   const { data } = await axiosInstance.get(`/api/contests/${alias}`);
   return data;
 };
 
-const joinContest = async (id: string): Promise<void> => {
-  const { data } = await axiosInstance.post(`/api/contests/${id}/join`);
+export const getAllContestApplicants = async (
+  contestID: string
+): Promise<IContest> => {
+  const { data } = await axiosInstance.get(
+    `/api/contests/allparticipants/${contestID}`
+  );
   return data;
 };
 
-export const useContests = (
-  filter: string,
-  city: string,
-): UseQueryResult<IContestCardProps[]> => {
-  return useQuery({
-    queryKey: ["contests", filter, city],
-    queryFn: () => getContests(filter, city),
-    enabled: !!filter, // Ensures the query runs only if filter is not empty
-  });
+// Delete a contest
+export const deleteContest = async (id: string): Promise<void> => {
+  await axiosInstance.delete(`/api/contests/${id}`);
 };
 
-export const useContestByAlias = (alias: string) => {
-  return useQuery({
-    queryKey: ["contest", alias],
-    queryFn: () => getContestByAlias(alias),
-  });
-};
-
-export const useJoinContest = () => {
-  return useMutation({
-    mutationFn: joinContest,
+// Remove a participant
+export const removeParticipant = async (
+  participantId: string
+): Promise<void> => {
+  await axiosInstance.delete(`/api/contests/participants`, {
+    data: { participantId },
   });
 };

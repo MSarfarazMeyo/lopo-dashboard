@@ -1,30 +1,20 @@
-import { useMutation } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
+import { IContest } from "../types/types";
 
-// Register for Contest Mutation Hook
-export const useRegisterForContest = () => {
-  return useMutation({
-    mutationFn: ({ contestID }: { contestID: number }) =>
-      axiosInstance.post(`/api/contests/participants/`, {
-        contestID,
-      }),
-  });
+export const getAllContestParticipant = async (
+  contestID: string
+): Promise<IContest> => {
+  const { data } = await axiosInstance.get(
+    `/api/contests/allparticipants/${contestID}`
+  );
+  return data;
 };
 
-// Submit Content Mutation Hook
-export const useSubmitContent = () => {
-  return useMutation({
-    mutationFn: ({
-      contestID,
-      submittedContent,
-    }: {
-      contestID: number;
-      submittedContent: string;
-    }) => {
-      return axiosInstance.put(
-        `/api/contests/participants/${contestID}/submit-content`,
-        { contestID, submittedContent },
-      );
-    },
+// Remove a participant
+export const removeParticipant = async (
+  participantId: string
+): Promise<void> => {
+  await axiosInstance.delete(`/api/contests/participants`, {
+    data: { participantId },
   });
 };

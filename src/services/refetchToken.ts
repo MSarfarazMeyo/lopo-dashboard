@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const checkToken = async () => {
-  if (!localStorage.getItem("authStatus")) return;
+  if (!localStorage.getItem("authStatus")) return null;
 
   try {
     const { data } = await axiosInstance.get("/api/users");

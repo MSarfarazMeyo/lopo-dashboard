@@ -1,7 +1,7 @@
 
-import { handleGoogleLogin } from "../../services/auth";
 
 import { FcGoogle } from "react-icons/fc";
+import { handleGoogleLogin } from "../../hooks/useLogout";
 
 
 const GoogleLoginButton = () => {

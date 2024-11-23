@@ -1,4 +1,3 @@
-
 export enum UserActivityStatus {
   active = "Active",
   deleted = "Deleted",
@@ -32,6 +31,15 @@ export interface IUser {
   publicProfile?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  wallet?: IWallet;
+  userLevel?: string;
+  walletCredit?: any;
+  creditsSpent?: any;
+  payoutBank?: any;
+  payoutAccount?: any;
+  shippingAddress?: any;
+  signupDate?: any;
+  lastActivityDate: any;
 }
 
 export enum EnumContestStatus {
@@ -63,6 +71,14 @@ export interface IContest {
   usersID?: number[];
   winnerID?: number;
   contentSubmit?: string;
+
+  country?: string;
+  city?: string;
+
+  gender?: string;
+  ageFrom?: number;
+  ageTo?: number;
+  bucketName?: string;
 }
 
 export interface IWallet {
@@ -77,6 +93,7 @@ export interface IWallet {
   payoutAccount?: string;
   routingNumber?: string;
   swiftCode?: string;
+  walletCredit: any;
 }
 
 export enum EnumUserParticipantStatus {
@@ -163,8 +180,6 @@ interface PayoutTransaction extends BaseTransaction {
 }
 
 export type ITransaction = CreditDebitTransaction | PayoutTransaction;
-
-
 
 export interface Language {
   value: string;

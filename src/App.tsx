@@ -1,30 +1,35 @@
-import React, { useEffect } from 'react';
-import { Routes, Route, useNavigate } from "react-router-dom";
-import './App.css';
-import GoogleLoginButton from './components/auth/google-login-button';
-import Login from './pages/Login';
+import React, { useEffect } from "react";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import "./App.css";
+import Login from "./screens/Login";
+
+import DashboardLayout from "./layout/DashboardLayout";
+import Home from "./screens/Home";
+import ManageContests from "./screens/contests/ManageContests";
+import ContestForm from "./screens/contests/ContextForm";
+import ManageUsers from "./screens/users/ManageUsers ";
+import UserDetails from "./screens/users/UserDetails";
+import GeneralSettings from "./screens/settings/GeneralSettings";
 
 function App() {
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-
-    navigate("/login"); // Redirect to login if not authenticated
-
-  }, [navigate]);
-
   return (
-
     <div className="App font-opensans">
-
-
       <Routes>
-        <Route index path="/login" element={<Login />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
 
-        {/* <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Admin />} />
-          <Route path="comments" element={<Comments />} />
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<Home />} />
+          <Route path="contests" element={<ManageContests />} />
+          <Route path="contests/:action" element={<ContestForm />} />
+          <Route path="users" element={<ManageUsers />} />
+          <Route path="users/:anction" element={<UserDetails />} />
+
+          <Route path=":page" element={<GeneralSettings />} />
+          <Route path=":page" element={<GeneralSettings />} />
+        </Route>
+
+        {/*  <Route path="comments" element={<Comments />} />
           <Route path="posts/manage" element={<ManagePosts />} />
           <Route path="posts/manage/edit/:slug" element={<EditPost />} />
           <Route path="/admin/chat" element={<ChatScreen />} />
@@ -43,9 +48,7 @@ function App() {
           <Route path="users/manage" element={<Users />} />
         </Route> */}
       </Routes>
-
     </div>
-
   );
 }
 

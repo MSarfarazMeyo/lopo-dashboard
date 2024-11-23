@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import axiosInstance from "./axiosInstance";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../services/axiosInstance";
 
 export const handleGoogleLogin = () => {
-  window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/google`;
+  window.location.href = `${process.env.REACT_APP_API_BASE_URL}/api/auth/google`;
 };
 
 export const useLogout = () => {
